@@ -14,36 +14,21 @@ print $v_nom;
 $v_string='No estan inserit el nom o el text del missatge';
 include 'connexioBD.php';
 $servername="xat";
-if (isset($v_nom) or (isset($v_msg)){
-$username="toguer";
-$password="root";
-$dbname="xat";
 
+    $sql = "INSERT INTO missatges (usuari,text,hora)
+        VALUES ('$usuari','$text','$data')";
+	if (mysqli_query($con, $sql)) {
+		ob_start(null, 100);
+		header("Location:index.php?missatge=$v_string");
+	} else {
+   	 $error =  "Error: " . $sql . "<br>" . mysqli_error($con);
+		ob_start(null, 100);
+		header("Location:index.php?error=$error");
+	}
+	
+    } else {
+		$error = "Error, hi han camps buits";
+		ob_start(null, 100);
+		header("Location:index.php?error=$error");
+    }
 ?>
-Hola <?php echo $v_nom; ?>.
-Tu mensaje es : <?php echo $v_msg; ?> .
-
-<?php
-$dt = new DateTime();
-
-$result = $dt->format('H:i:s');
-$sql = "INSERT INTO missatges (usuari, text, hora)
-VALUES ('$v_nom', '$v_msg', '$result')";
-
-
-}else {
-echo  $v_string; 	
-
-
-
-}
-if (mysqli_query($con, $sql)) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-
-mysqli_close($conn);
-header("Location:index.php");	
-}
-?>
-<html>
